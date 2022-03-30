@@ -42,3 +42,13 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+func (d deck) toString() string {
+	string := ""
+
+	for _, card := range d {
+		string += card + "\n"
+	}
+
+	return string
+}
