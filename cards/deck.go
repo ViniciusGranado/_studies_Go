@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+	"math/rand"
 )
 
 type deck []string
@@ -67,4 +68,14 @@ func newDeckFromFile(filename string) deck {
 	s := strings.Split(string(byteSlice), ",")
 
 	return deck(s)
+}
+
+func (d deck) shufle() {
+	var newPosition int
+
+	for i := range d {
+		newPosition = rand.Intn(len(d))
+
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
