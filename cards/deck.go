@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 	"math/rand"
+	"time"
 )
 
 type deck []string
@@ -71,10 +72,13 @@ func newDeckFromFile(filename string) deck {
 }
 
 func (d deck) shufle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
 	var newPosition int
 
 	for i := range d {
-		newPosition = rand.Intn(len(d))
+		newPosition = r.Intn(len(d))
 
 		d[i], d[newPosition] = d[newPosition], d[i]
 	}
