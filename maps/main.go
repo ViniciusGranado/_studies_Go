@@ -9,4 +9,12 @@ func main() {
 	}
 
 	fmt.Println(color)
+
+	color["white"] = "#ffffff"
+
+	fmt.Println(color)
+
+	delete(color, "red")
+
+	fmt.Println(color)
 }
