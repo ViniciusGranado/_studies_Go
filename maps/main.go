@@ -2,19 +2,23 @@ package main
 
 import "fmt"
 
+type colorMap map[string]string
+
 func main() {
-	color := map[string]string{
+	color := colorMap{
 		"red": "#ff0000",
 		"green": "#4bf745",
 	}
 
-	fmt.Println(color)
-
 	color["white"] = "#ffffff"
-
-	fmt.Println(color)
 
 	delete(color, "red")
 
-	fmt.Println(color)
+	color.printColorMap()
+}
+
+func (c colorMap) printColorMap() {
+	for color, hex := range c {
+		fmt.Printf("Hex color for %v is %v\n", color, hex)
+	}
 }
