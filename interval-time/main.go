@@ -3,12 +3,14 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"time"
 )
 
 func main() {
 	reader := bufio.NewReader(os.Stdin);
+	ticker := time.NewTicker(time.Minute)
 
 	fmt.Print("What is the time for your break: ")
 	usrInput, errInput := reader.ReadString('\n')
@@ -18,43 +20,40 @@ func main() {
 		os.Exit(1)
 	}
 
+	now := time.Now()
 	breakTime, errParse := time.Parse("15:04", usrInput[:5])
-
+	
 	if errParse != nil {
 		fmt.Println("Error: ", errParse)
 		os.Exit(1)
 	}
 
+	breakTime = time.Date(
+		now.Year(),
+		now.Month(),
+		now.Day(),
+		breakTime.Hour(),
+		breakTime.Minute(),
+		0,
+		0,
+		time.Local,
+	)
 
-	breakHour := breakTime.Hour()
-	breakMinute := breakTime.Minute()
+	if (time.Until(breakTime) < 0) {
+		breakTime = breakTime.Add(24 * time.Hour)
+	}
 
 	for {
-		currentTime := time.Now()
+		ut := time.Until(breakTime)
 
-		currentHour := currentTime.Hour()
-		currentMinute:= currentTime.Minute()
-
-		if (currentHour == breakHour) && (currentMinute == breakMinute) {
+		if ut <= 0 {
 			break
 		}
 
-		var missingHours int;
-		var missingMinutes int;
-
-
-		if breakMinute > currentMinute {
-			missingHours = breakHour - currentHour
-			missingMinutes = breakMinute - currentMinute
-		} else {
-			missingHours = (breakHour - currentHour) - 1
-			missingMinutes = (60 + breakMinute) - currentMinute
-		}
-
 		fmt.Println("\nSO SAD ):")
-		fmt.Printf("There are still %v hours and %v minutes left for the break\n", missingHours, missingMinutes)
+		fmt.Printf("There are still %v hours and %v minutes left for the break\n", math.Floor(ut.Hours()), math.Ceil(ut.Minutes()))
 
-		time.Sleep(time.Minute)
+		<- ticker.C
 	}
 
 	fmt.Println("\nIT'S BREAK TIME!!!")
