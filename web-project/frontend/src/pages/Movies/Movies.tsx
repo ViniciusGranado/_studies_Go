@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Movie } from '../../models/models';
+import { MovieItem } from '../../models/models';
+import { Link } from 'react-router-dom';
 
 export const Movies = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MovieItem[]>([]);
 
   useEffect(() => {
     setMovies([
       { id: 1, title: 'The Shawshank Redemption', runtime: 142 },
-      { id: 1, title: 'The Godfather', runtime: 175 },
-      { id: 1, title: 'The Dark Knight', runtime: 153 },
+      { id: 2, title: 'The Godfather', runtime: 175 },
+      { id: 3, title: 'The Dark Knight', runtime: 153 },
     ]);
   }, []);
 
@@ -18,7 +19,9 @@ export const Movies = () => {
 
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
+          <li key={movie.id}>
+            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+          </li>
         ))}
       </ul>
     </>
