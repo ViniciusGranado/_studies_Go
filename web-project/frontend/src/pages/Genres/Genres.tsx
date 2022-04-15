@@ -26,6 +26,18 @@ export const Genres = () => {
       });
   }, []);
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!isLoaded) {
+    return <p>Loading...</p>;
+  }
+
+  if (!genres) {
+    return <p>No genres on the database</p>;
+  }
+
   return (
     <>
       <h2>Genres</h2>
