@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { Admin } from './pages/Admin/Admin';
+import { Genre } from './pages/Genre/Genre';
 import { Genres } from './pages/Genres/Genres';
 import { Home } from './pages/Home/Home';
 import { Movie } from './pages/Movie/Movie';
@@ -38,6 +39,7 @@ function App() {
             <Routes>
               <Route path='/movies/:id' element={<Movie />} />
               <Route path='/movies' element={<Movies />} />
+              <Route path='/genres/:id' element={<Genre />} />
               <Route path='/genres' element={<Genres />} />
               <Route path='/admin' element={<Admin />} />
               <Route path='/' element={<Home />} />
