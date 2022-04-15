@@ -11,3 +11,8 @@ export interface MovieItem {
     [id: number]: string;
   };
 }
+
+export interface GenreItem {
+	id: number;
+	genre_name: string;
+}
