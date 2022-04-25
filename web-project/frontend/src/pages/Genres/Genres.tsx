@@ -42,13 +42,17 @@ export const Genres = () => {
     <>
       <h2>Genres</h2>
 
-      <ul>
+      <div className='list-group'>
         {genres.map((genre) => (
-          <li key={genre.id}>
-            <Link to={`/genres/${genre.id}`}>{genre.genre_name}</Link>
-          </li>
+            <Link
+            key={genre.id}
+              className='list-group-item list-group-item-action'
+              to={`/genres/${genre.id}`}
+            >
+              {genre.genre_name}
+            </Link>
         ))}
-      </ul>
+      </div>
     </>
   );
-}
+};

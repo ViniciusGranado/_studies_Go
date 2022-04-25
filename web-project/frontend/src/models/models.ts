@@ -16,3 +16,8 @@ export interface GenreItem {
 	id: number;
 	genre_name: string;
 }
+
+export interface MoviesByGenre {
+	genre_name: string;
+	movies: MovieItem[];
+}

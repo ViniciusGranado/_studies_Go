@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { MovieItem } from '../../models/models';
+import { MoviesByGenre } from '../../models/models';
 
 export const Genre = () => {
   const { id } = useParams();
-  const [movies, setMovies] = useState<MovieItem[]>([]);
+  const [moviesByGenre, setMoviesByGenre] = useState<MoviesByGenre>();
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -22,7 +22,7 @@ export const Genre = () => {
           return response.json();
         })
         .then((json) => {
-          setMovies(json.movies);
+          setMoviesByGenre(json.movies);
           setIsLoaded(true);
           setError(null);
         });
@@ -37,25 +37,25 @@ export const Genre = () => {
     return <p>Loading...</p>;
   }
 
-  if (movies === null) {
-    return <p>No movies with this genre</p>;
-  }
-
   return (
     <>
-      <h2>Genre:</h2>
+      <h2>Genre: {moviesByGenre?.genre_name}</h2>
 
-      <div className='list-group'>
-        {movies.map((movie) => (
-          <Link
-            to={`/movies/${movie.id}`}
-            className='list-group-item list-group-item-action'
-            key={movie.id}
-          >
-            {movie.title}
-          </Link>
-        ))}
-      </div>
+      {moviesByGenre?.movies === null ? (
+        <p>No movies with this genre</p>
+      ) : (
+        <div className='list-group'>
+          {moviesByGenre?.movies.map((movie) => (
+            <Link
+              to={`/movies/${movie.id}`}
+              className='list-group-item list-group-item-action'
+              key={movie.id}
+            >
+              {movie.title}
+            </Link>
+          ))}
+        </div>
+      )}
     </>
   );
 };
