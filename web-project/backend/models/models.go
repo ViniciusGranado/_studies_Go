@@ -36,6 +36,11 @@ type Genre struct {
 	UpdatedAt time.Time `json:"-"`
 }
 
+type MoviesByGenre struct {
+	GenreName string `json:"genre_name"`
+	Movies []*Movie `json:"movies"`
+}
+
 type MovieGenre struct {
 	ID int `json:"-"`
 	MovieId int `json:"-"`
