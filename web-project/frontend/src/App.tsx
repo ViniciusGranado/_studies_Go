@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { Admin } from './pages/Admin/Admin';
+import { EditMovie } from './pages/EditMovie/EditMovie';
 import { Genre } from './pages/Genre/Genre';
 import { Genres } from './pages/Genres/Genres';
 import { Home } from './pages/Home/Home';
@@ -29,6 +30,9 @@ function App() {
                   <Link to='/genres'>Genres</Link>
                 </li>
                 <li className='list-group-item'>
+                  <Link to='/admin/add'>Add Movie</Link>
+                </li>
+                <li className='list-group-item'>
                   <Link to='/admin'>Manage Catalogue</Link>
                 </li>
               </ul>
@@ -41,6 +45,7 @@ function App() {
               <Route path='/movies' element={<Movies />} />
               <Route path='/genres/:id' element={<Genre />} />
               <Route path='/genres' element={<Genres />} />
+              <Route path='/admin/add' element={<EditMovie />} />
               <Route path='/admin' element={<Admin />} />
               <Route path='/' element={<Home />} />
             </Routes>
