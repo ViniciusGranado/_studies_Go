@@ -12,7 +12,7 @@ const initialMovie: MovieItem = {
   release_date: '1999',
   runtime: 200,
   title: 'The Godfather',
-  year: 1999
+  year: 1999,
 };
 
 export const EditMovie = () => {
@@ -20,12 +20,30 @@ export const EditMovie = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
+  const handleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    setMovie((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('Form was submited');
+  };
+
   return (
     <>
       <h2>Add/Edit Movie</h2>
       <hr />
 
-      <form method='post'>
+      <form onSubmit={handleSubmit}>
+        <input type='hidden' name='id' id='id' value={movie.id} />
+
         <div className='mb-3'>
           <label htmlFor='title' className={`form-label`}>
             Title
@@ -36,7 +54,8 @@ export const EditMovie = () => {
           name='title'
           id='title'
           className='form-control'
-          value={movie?.title}
+          value={movie.title}
+          onChange={handleChange}
         />
 
         <div className='mb-3'>
@@ -46,10 +65,11 @@ export const EditMovie = () => {
         </div>
         <input
           type='text'
-          name='release-date'
-          id='release-date'
+          name='release_date'
+          id='release_date'
           className='form-control'
-          value={movie?.release_date}
+          value={movie.release_date}
+          onChange={handleChange}
         />
 
         <div className='mb-3'>
@@ -62,7 +82,8 @@ export const EditMovie = () => {
           name='runtime'
           id='runtime'
           className='form-control'
-          value={movie?.runtime}
+          value={movie.runtime}
+          onChange={handleChange}
         />
 
         <div className='mb-3'>
@@ -70,7 +91,13 @@ export const EditMovie = () => {
             MPAA Rating
           </label>
         </div>
-        <select className='form-select' value={movie?.mpaa_rating}>
+        <select
+          className='form-select'
+          value={movie.mpaa_rating}
+          name='mpaa_rating'
+          id='mpaa_rating'
+          onChange={handleChange}
+        >
           <option className='form-select'>Choose...</option>
           <option className='form-select' value='G'>
             G
@@ -78,7 +105,7 @@ export const EditMovie = () => {
           <option className='form-select' value='PG'>
             PG
           </option>
-          <option className='form-select' value='PG14'>
+          <option className='form-select' value='PG13'>
             PG14
           </option>
           <option className='form-select' value='R'>
@@ -99,7 +126,8 @@ export const EditMovie = () => {
           name='rating'
           id='rating'
           className='form-control'
-          value={movie?.rating}
+          value={movie.rating}
+          onChange={handleChange}
         />
 
         <div className='mb-3'>
@@ -112,14 +140,18 @@ export const EditMovie = () => {
           id='description'
           className='form-control'
           rows={3}
-        >
-          {movie?.description}
-        </textarea>
+          value={movie.description}
+          onChange={handleChange}
+        />
 
         <hr />
 
         <button className='btn btn-primary'>Save</button>
       </form>
+
+      <div className='mt-3'>
+        <pre>{JSON.stringify(movie)}</pre>
+      </div>
     </>
   );
 };
