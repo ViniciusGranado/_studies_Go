@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Input } from '../../components/form/Input/Input';
 import { MovieItem } from '../../models/models';
 
 import './EditMovie.css';
@@ -44,102 +45,51 @@ export const EditMovie = () => {
       <form onSubmit={handleSubmit}>
         <input type='hidden' name='id' id='id' value={movie.id} />
 
-        <div className='mb-3'>
-          <label htmlFor='title' className={`form-label`}>
-            Title
-          </label>
-        </div>
-        <input
-          type='text'
+        <Input
           name='title'
-          id='title'
-          className='form-control'
+          title='Title'
+          type='text'
           value={movie.title}
           onChange={handleChange}
         />
 
-        <div className='mb-3'>
-          <label htmlFor='release-date' className='form-label'>
-            Release Date
-          </label>
-        </div>
-        <input
-          type='text'
+        <Input
           name='release_date'
-          id='release_date'
-          className='form-control'
+          title='Release Date'
+          type='text'
           value={movie.release_date}
           onChange={handleChange}
         />
 
-        <div className='mb-3'>
-          <label htmlFor='runtime' className='form-label'>
-            Runtime
-          </label>
-        </div>
-        <input
-          type='text'
+        <Input
           name='runtime'
-          id='runtime'
-          className='form-control'
+          title='Runtime'
+          type='text'
           value={movie.runtime}
           onChange={handleChange}
         />
 
-        <div className='mb-3'>
-          <label htmlFor='mpaa_rating' className='form-label'>
-            MPAA Rating
-          </label>
-        </div>
-        <select
-          className='form-select'
-          value={movie.mpaa_rating}
+        <Input
           name='mpaa_rating'
-          id='mpaa_rating'
+          title='MPAA Rating'
+          type='Select'
+          options={['G', 'PG', 'PG14', 'R', 'NC17']}
+          value={movie.mpaa_rating}
           onChange={handleChange}
-        >
-          <option className='form-select'>Choose...</option>
-          <option className='form-select' value='G'>
-            G
-          </option>
-          <option className='form-select' value='PG'>
-            PG
-          </option>
-          <option className='form-select' value='PG13'>
-            PG14
-          </option>
-          <option className='form-select' value='R'>
-            R
-          </option>
-          <option className='form-select' value='NC17'>
-            NC17
-          </option>
-        </select>
+        />
 
-        <div className='mb-3'>
-          <label htmlFor='rating' className='form-label'>
-            Rating
-          </label>
-        </div>
-        <input
-          type='text'
+        <Input
           name='rating'
-          id='rating'
-          className='form-control'
+          title='Rating'
+          type='text'
           value={movie.rating}
           onChange={handleChange}
         />
 
-        <div className='mb-3'>
-          <label htmlFor='description' className='form-label'>
-            Description
-          </label>
-        </div>
-        <textarea
+        <Input
           name='description'
-          id='description'
-          className='form-control'
-          rows={3}
+          title='Description'
+          type='TextArea'
           value={movie.description}
           onChange={handleChange}
         />
