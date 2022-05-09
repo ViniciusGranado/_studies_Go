@@ -41,21 +41,6 @@ export const Input: React.FC<InputProps> = ({
               </option>
             );
           })}
-          <option className='form-select' value='G'>
-            G
-          </option>
-          <option className='form-select' value='PG'>
-            PG
-          </option>
-          <option className='form-select' value='PG13'>
-            PG14
-          </option>
-          <option className='form-select' value='R'>
-            R
-          </option>
-          <option className='form-select' value='NC17'>
-            NC17
-          </option>
         </select>
       );
     }
