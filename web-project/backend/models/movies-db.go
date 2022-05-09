@@ -153,7 +153,7 @@ func (m *DBModel) AllMoviesByGenre(genreID int) (*MoviesByGenre, error) {
 
 	query := "SELECT genre_name FROM genres WHERE id = $1"
 
-	row := m.DB.QueryRowContext(ctx, query, genreID);
+	row := m.DB.QueryRowContext(ctx, query, genreID)
 
 	var genreName string
 
@@ -230,20 +230,20 @@ func (m *DBModel) AllMoviesByGenre(genreID int) (*MoviesByGenre, error) {
 
 	moviesByGenre := MoviesByGenre{
 		GenreName: genreName,
-		Movies: movies,
+		Movies:    movies,
 	}
 
 	return &moviesByGenre, nil
 }
 
 func (m *DBModel) AllGenres() ([]*Genre, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 
 	defer cancel()
 
 	query := `SELECT * FROM genres`
 
-	rows, err := m.DB.QueryContext(ctx, query);
+	rows, err := m.DB.QueryContext(ctx, query)
 
 	if err != nil {
 		return nil, err
