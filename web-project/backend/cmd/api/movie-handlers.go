@@ -67,7 +67,7 @@ func (app *application) getAllGenres(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *application) getAllMoviesByGenre(w http.ResponseWriter, r * http.Request) {
+func (app *application) getAllMoviesByGenre(w http.ResponseWriter, r *http.Request) {
 	params := httprouter.ParamsFromContext(r.Context())
 
 	id, err := strconv.Atoi(params.ByName("genre_id"))
@@ -98,14 +98,23 @@ func (app *application) deleteMovie(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *application) insertMovie(w http.ResponseWriter, r *http.Request) {
-	
-}
+func (app *application) editMovie(w http.ResponseWriter, r *http.Request) {
+	type jsonResp struct {
+		OK bool `json:"ok"`
+	}
 
-func (app *application) updateMovie(w http.ResponseWriter, r *http.Request) {
-	
+	ok := jsonResp{
+		OK: true,
+	}
+
+	err := app.writeJson(w, http.StatusOK, ok, "response");
+
+	if err != nil {
+		app.errorJson(w, err)
+		return
+	}
 }
 
 func (app *application) searchMovies(w http.ResponseWriter, r *http.Request) {
-	
+
 }
