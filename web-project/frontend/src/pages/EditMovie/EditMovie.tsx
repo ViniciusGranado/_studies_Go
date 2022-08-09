@@ -10,11 +10,11 @@ const initialMovie: MovieItem = {
   genres: [],
   id: 0,
   mpaa_rating: '',
-  rating: 0,
-  release_date: '',
-  runtime: 0,
+  rating: 5,
+  release_date: '2000-01-01',
+  runtime: 120,
   title: '',
-  year: 0,
+  year: 2000,
 };
 
 export const EditMovie: React.FC = () => {
@@ -71,7 +71,20 @@ export const EditMovie: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Form was submited');
+    
+    const data = new FormData(event.target as HTMLFormElement);
+    const payload = Object.fromEntries(data.entries());
+
+    console.log(payload);
+
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    };
+
+    fetch('http://localhost:4000/v1/admin/editmovie', requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   if (error) {
