@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Input } from '../../components/form/Input/Input';
 import { MovieItem } from '../../models/models';
 
@@ -7,19 +8,55 @@ import './EditMovie.css';
 const initialMovie: MovieItem = {
   description: '',
   genres: [],
-  id: 1,
-  mpaa_rating: 'R',
-  rating: 5,
-  release_date: '1999',
-  runtime: 200,
-  title: 'The Godfather',
-  year: 1999,
+  id: 0,
+  mpaa_rating: '',
+  rating: 0,
+  release_date: '',
+  runtime: 0,
+  title: '',
+  year: 0,
 };
 
-export const EditMovie = () => {
+export const EditMovie: React.FC = () => {
   const [movie, setMovie] = useState<MovieItem>(initialMovie);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    if (id && !isNaN(Number.parseInt(id))) {
+      if (Number.parseInt(id) > 0) {
+        fetch(`http://localhost:4000/v1/movie/${id}`)
+          .then((response) => {
+            if (response.status !== 200) {
+              const err = new Error(`Invalid responde code: ${response.status}`);
+              setError(err);
+            }
+              return response.json();
+          })
+          .then((json) => {
+            const movie: MovieItem = json.movie;
+            const releaseData = new Date(movie.release_date);
+
+            setMovie({
+              id: Number.parseInt(id),
+              title: movie.title,
+              release_date: releaseData.toISOString().split("T")[0],
+              runtime: movie.runtime,
+              mpaa_rating: movie.mpaa_rating,
+              rating: movie.rating,
+              description: movie.description,
+              year: movie.year,
+              genres: movie.genres,
+            })
+
+            setIsLoaded(true);
+          })
+      } else {
+        setIsLoaded(true);
+      }
+    }
+  }, [id]);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -36,6 +73,14 @@ export const EditMovie = () => {
     event.preventDefault();
     console.log('Form was submited');
   };
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!isLoaded) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
