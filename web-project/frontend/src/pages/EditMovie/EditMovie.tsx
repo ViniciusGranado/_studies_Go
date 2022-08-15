@@ -21,6 +21,7 @@ export const EditMovie: React.FC = () => {
   const [movie, setMovie] = useState<MovieItem>(initialMovie);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -56,7 +57,11 @@ export const EditMovie: React.FC = () => {
         setIsLoaded(true);
       }
     }
-  }, [id]);
+  }, [id]); 
+
+  const hasError = (key: string) => {
+    return errors.indexOf(key) !== -1;
+  }
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -71,7 +76,11 @@ export const EditMovie: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
+    if (movie.title === '') setErrors((prev) => [...prev, 'title']);
+
+    if (errors.length > 0) return false;
+
     const data = new FormData(event.target as HTMLFormElement);
     const payload = Object.fromEntries(data.entries());
 
@@ -109,6 +118,9 @@ export const EditMovie: React.FC = () => {
           type='text'
           value={movie.title}
           onChange={handleChange}
+          className={hasError('title') ? 'is-invalid' : ''}
+          errorDiv={hasError('title') ? 'text-danger' : 'd-none'}
+          errorMsg={'Please enter a title'}
         />
 
         <Input

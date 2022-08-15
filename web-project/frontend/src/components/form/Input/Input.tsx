@@ -7,6 +7,9 @@ interface InputProps {
   value: string | number;
   placeholder?: string;
   options?: string[];
+  className?: string;
+  errorDiv?: string,
+  errorMsg?: string,
   onChange: (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -21,6 +24,9 @@ export const Input: React.FC<InputProps> = ({
   value,
   placeholder,
   options,
+  className,
+  errorDiv,
+  errorMsg,
   onChange,
 }) => {
   const getInput = () => {
@@ -63,7 +69,7 @@ export const Input: React.FC<InputProps> = ({
         type={type}
         name={name}
         id={name}
-        className='form-control'
+        className={`form-control ${className}`}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -79,6 +85,7 @@ export const Input: React.FC<InputProps> = ({
         </label>
       </div>
       {getInput()}
+      <div className={errorDiv}>{errorMsg}</div>
     </>
   );
 };
